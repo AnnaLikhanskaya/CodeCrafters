@@ -7,6 +7,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 //        CustomArrayList<Integer> arrayList = new CustomArrayList<>();
 
+        
         while (true) {
             System.out.println("Приветсвуем Вас в приложении сортировки!");
             System.out.println("Выберете действие:");
