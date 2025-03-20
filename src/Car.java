@@ -5,6 +5,8 @@ public class Car {
     private final String model;
     private final int year;
 
+    /*стоит ли решать продлему с пустым полем при создании объекта класса ?? */
+
     private Car(int power, String model, int year) {
         this.power = power;
         this.model = model;
@@ -53,7 +55,16 @@ public class Car {
         }
 
         public Car build() {
-            return new Car(power, model, year);
+            /*если валидация не пройдена - возвращаем сообщение и null*/
+            if (validateCheck()) {
+                return new Car(power, model, year);
+            }
+            System.out.println("Заполните поля правильно");
+            return null;
+        }
+        /* проверяем, что power в диапозоне 1 - 1000, model не пустая строка, year в диапозоне 1901 - 2025*/
+        public boolean validateCheck() {
+            return ((power > 0 && power < 1001) && (model != null && !model.isEmpty()) && (year < 2026 & year > 1900));
         }
     }
 }
