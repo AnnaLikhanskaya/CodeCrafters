@@ -1,5 +1,5 @@
 
-public class Car {
+public class Car implements CarComparator{
 
     private final int power;
     private final String model;
