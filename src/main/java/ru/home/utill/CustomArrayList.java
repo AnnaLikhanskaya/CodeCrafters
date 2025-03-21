@@ -36,6 +36,15 @@ public class CustomArrayList<T> {
         return size;
     }
 
+    public T set(int index, T element) {
+        if (index >= size || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        T oldValue = (T) elements[index];
+        elements[index] = element;
+        return oldValue;
+    }
+
     public void remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
