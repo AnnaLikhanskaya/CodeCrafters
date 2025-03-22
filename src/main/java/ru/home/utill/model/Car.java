@@ -1,4 +1,4 @@
-package main.java.ru.home.utill;
+package main.java.ru.home.utill.model;
 
 public class Car implements Comparable<Car> {
     private int power;

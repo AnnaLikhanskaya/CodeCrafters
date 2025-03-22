@@ -1,73 +1,139 @@
-package main.java.ru.home;
+package main.java.ru.home;//package main.java.ru.home;
 
 import main.java.ru.home.utill.BinarySearch;
-import main.java.ru.home.utill.MergeSortStrategy;
-import main.java.ru.home.utill.SortStrategy;
-import main.java.ru.home.utill.Car;
+import main.java.ru.home.utill.MergeSort;
+import main.java.ru.home.utill.model.Book;
+import main.java.ru.home.utill.model.Car;
+import main.java.ru.home.utill.model.RootVegetable;
+import main.java.ru.home.utill.strategy.interfaces.DataInputStrategy;
 import main.java.ru.home.utill.CustomArrayList;
+import main.java.ru.home.utill.strategy.inputbook.FileInputBook;
+import main.java.ru.home.utill.strategy.inputbook.ManualInputBook;
+import main.java.ru.home.utill.strategy.inputbook.RandomInputBook;
+import main.java.ru.home.utill.strategy.inputcar.FileInputCar;
+import main.java.ru.home.utill.strategy.inputcar.ManualInputCar;
+import main.java.ru.home.utill.strategy.inputcar.RandomInputCar;
+import main.java.ru.home.utill.strategy.inputrootvegetable.FileInputRootVegetable;
+import main.java.ru.home.utill.strategy.inputrootvegetable.ManualInputRootVegetable;
+import main.java.ru.home.utill.strategy.inputrootvegetable.RandomInputRootVegetable;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-//        CustomArrayList<Car> cars = new CustomArrayList<>();
-//        SortStrategy<Car> strategy = new MergeSortStrategy<>();
-//        cars.add(new Car.Builder().power(500).model("Mazda").year(2000).build());
-//        cars.add(new Car.Builder().power(200).model("Audi").year(2005).build());
-//        cars.add(new Car.Builder().power(300).model("BMW").year(2015).build());
-//        System.out.println(cars);
-//        strategy.sort(cars);
-//        System.out.println(cars);
-//        BinarySearch<Car> binarySearch = new BinarySearch<>();
-//        System.out.println(cars.get(binarySearch.search(cars,new Car.Builder().power(500).model("Mazda").year(2000).build())));
-
         Scanner scanner = new Scanner(System.in);
-        CustomArrayList<Car> cars = new CustomArrayList<>();
-        SortStrategy<Car> strategy = new MergeSortStrategy<>();
-
         while (true) {
-            System.out.println("1. Add Car |  2. Sort Car |  3. Search Car |  4. Exit");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (choice) {
+            System.out.println("Выберите тип данных (1 - Автомобиль, 2 - Книга, 3 - Корнеплод):");
+            int type = scanner.nextInt();
+            System.out.println("Выберите способ ввода данных (1 - Вручную, 2 - Из файла, 3 - Случайно):");
+            int inputMethod = scanner.nextInt();
+            DataInputStrategy<Car> car = null;
+            DataInputStrategy<Book> book = null;
+            DataInputStrategy<RootVegetable> rootVegetable = null;
+            CustomArrayList<Car> listCar = null;
+            CustomArrayList<RootVegetable> listRoot = null;
+            CustomArrayList<Book> listBook = null;
+            switch (inputMethod) {
                 case 1:
-                    System.out.println("Enter power, model, year:");
-                    String product = scanner.nextLine();
-                    String[] split = product.split(", ");
-                    int power = Integer.parseInt(split[0]);
-                    String model = split[1];
-                    int year = Integer.parseInt(split[2]);
-                    cars.add(new Car.Builder().power(power).model(model).year(year).build());
-                    System.out.println("Car added: " + cars);
+                    if (type == 1) {
+                        car = new ManualInputCar(scanner);
+                    }
+                    if (type == 2) {
+                        book = new ManualInputBook(scanner);
+                    }
+                    if (type == 3) {
+                        rootVegetable = new ManualInputRootVegetable(scanner);
+                    }
                     break;
                 case 2:
-                    System.out.println("Sorting");
-                    strategy.sort(cars);
-                    for (int i = 0; i < cars.size(); i++) {
-                        System.out.println(cars.get(i));
+                    if (type == 1) {
+                        car = new FileInputCar();
+                    }
+                    if (type == 2) {
+                        book = new FileInputBook();
+                    }
+                    if (type == 3) {
+                        rootVegetable = new FileInputRootVegetable();
                     }
                     break;
                 case 3:
-                    System.out.println("Enter model to search:");
-                    String prod = scanner.nextLine();
-                    String[] spl = prod.split(", ");
-                    int p = Integer.parseInt(spl[0]);
-                    String m = spl[1];
-                    int y = Integer.parseInt(spl[2]);
-                    BinarySearch<Car> binarySearch = new BinarySearch<>();
-                    Car car = cars.get(binarySearch
-                            .search(cars, new Car.Builder().power(p).model(m).year(y).build()));
-                    System.out.println(car);
+                    if (type == 1) {
+                        car = new RandomInputCar();
+                    }
+                    if (type == 2) {
+                        book = new RandomInputBook();
+                    }
+                    if (type == 3) {
+                        rootVegetable = new RandomInputRootVegetable();
+                    }
                     break;
-                case 4:
-                    System.exit(0);
+
                 default:
-                    System.out.println("Invalid choice");
+                    System.out.println("Неверный выбор");
+                    continue;
+            }
+
+
+            if (car != null) {
+                listCar = car.inputData();
+                System.out.println("До сортировки: " + listCar);
+                MergeSort<Car> sorter = new MergeSort<>();
+                sorter.sort(listCar);
+                System.out.println("После сортировки: " + listCar);
+            } else if (book != null) {
+                listBook = book.inputData();
+                System.out.println("До сортировки: " + listBook);
+                MergeSort<Book> sorter = new MergeSort<>();
+                sorter.sort(listBook);
+                System.out.println("После сортировки: " + listBook);
+            } else if (rootVegetable != null) {
+                listRoot = rootVegetable.inputData();
+                System.out.println("До сортировки: " + listRoot);
+                MergeSort<RootVegetable> sorter = new MergeSort<>();
+                sorter.sort(listRoot);
+                System.out.println("После сортировки: " + listRoot);
+            }
+
+            System.out.println("Хотите выполнить бинарный поиск? (1 - Да, 2 - Нет):");
+            int searchChoice = scanner.nextInt();
+            if (searchChoice == 1) {
+                System.out.println("Введите элемент для поиска:");
+                if (listCar != null) {
+                    BinarySearch<Car> binarySearch = new BinarySearch<>();
+                    Car carFind = new Car.Builder().power(200).model("Mazda").year(2019).build();
+                    int index = binarySearch.search(listCar, carFind);
+                    check(index);
+                }
+                if (listBook != null) {
+                    BinarySearch<Book> binarySearch = new BinarySearch<>();
+//                    C carFind = new Car.Builder().power(200).model("Mazda").year(2019).build();
+//                    int index = binarySearch.search(listBook, bookFind);
+//                    check(index);
+                }
+                if (listRoot != null) {
+                    BinarySearch<RootVegetable> binarySearch = new BinarySearch<>();
+//                    Car carFind = new Car.Builder().power(200).model("Mazda").year(2019).build();
+//                    int index = binarySearch.search(listRoot, rootFind);
+//                    check(index);
+                }
+            }
+            System.out.println("Хотите выйти? (1 - Да, 2 - Нет):");
+            int exitChoice = scanner.nextInt();
+            if (exitChoice == 1) {
+                break;
             }
         }
     }
 
+    private static void check(int index) {
+        if (index != -1) {
+            System.out.println("Элемент найден на позиции: " + index);
+        } else {
+            System.out.println("Элемент не найден");
+        }
+    }
 }
+
+
+
+

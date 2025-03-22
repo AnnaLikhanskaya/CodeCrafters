@@ -63,17 +63,17 @@ public class CustomArrayList<T> {
         elements = Arrays.copyOf(elements, newCapacity);
     }
 
-    public void sort(Comparator<? super T> comparator) {
-        quickSort(0, size - 1, comparator);
-    }
-
-    private void quickSort(int low, int high, Comparator<? super T> comparator) {
-        if (low < high) {
-            int pi = partition(low, high, comparator);
-            quickSort(low, pi - 1, comparator);
-            quickSort(pi + 1, high, comparator);
-        }
-    }
+//    public void sort(Comparator<? super T> comparator) {
+//        quickSort(0, size - 1, comparator);
+//    }
+//
+//    private void quickSort(int low, int high, Comparator<? super T> comparator) {
+//        if (low < high) {
+//            int pi = partition(low, high, comparator);
+//            quickSort(low, pi - 1, comparator);
+//            quickSort(pi + 1, high, comparator);
+//        }
+//    }
 
     private int partition(int low, int high, Comparator<? super T> comparator) {
         T pivot = get(high);
