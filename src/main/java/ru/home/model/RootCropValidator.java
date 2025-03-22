@@ -1,4 +1,4 @@
-package main.java.ru.home.data;
+package main.java.ru.home.model;
 
 public class RootCropValidator implements DataValidator<RootCrop> {
     @Override
