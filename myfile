@@ -1,9 +1,0 @@
-Car{power=241, model='Model-51', productionYear=1976}
-Car{power=234, model='Model-40', productionYear=2017}
-Car{power=114, model='Model-29', productionYear=2005}
-Car{power=208, model='Model-64', productionYear=2010}
-RootCrop{type='морковь', weight=3, color='синий'}
-RootCrop{type='капуста', weight=2, color='зеленый'}
-RootCrop{type='свекла', weight=5, color='серый'}
-RootCrop{type='лук', weight=1, color='желтый'}
-RootCrop{type='сельдерей', weight=7, color='салатовый'}
