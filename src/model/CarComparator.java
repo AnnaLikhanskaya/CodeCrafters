@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Comparator;
 
 /*сравнение происходит по всем полям. начинаем с марки авто*/
@@ -26,14 +28,14 @@ public interface CarComparator extends Comparator<Car> {
 /*пример использования*/
 /*    public static void main(String[] args) throws Exception {
 
-        CarComparator comp = new CarComparator() {
+        model.CarComparator comp = new model.CarComparator() {
             @Override
-            public int compare(Car car1, Car car2) {
-                return CarComparator.super.compare(car1, car2);
+            public int compare(model.Car car1, model.Car car2) {
+                return model.CarComparator.super.compare(car1, car2);
                 }
             };
 
-        List<Car> cars = List.of();
+        List<model.Car> cars = List.of();
 
         cars.stream()
                  .sorted(comp)
