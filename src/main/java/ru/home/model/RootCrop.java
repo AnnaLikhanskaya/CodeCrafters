@@ -76,5 +76,5 @@ public class RootCrop implements Comparable<RootCrop> {
     public String getColor() {
         return color;
     }
-// Getters, toString, equals, hashCode
+
 }
