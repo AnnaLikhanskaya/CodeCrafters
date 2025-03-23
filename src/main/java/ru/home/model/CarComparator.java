@@ -1,4 +1,4 @@
-package model;
+package java.ru.home.model;
 
 import java.util.Comparator;
 
