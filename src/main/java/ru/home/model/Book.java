@@ -1,4 +1,4 @@
-package main.java.ru.home;
+package main.java.ru.home.model;
 
 public class Book implements Comparable<Book> {
     private String author;
@@ -6,7 +6,7 @@ public class Book implements Comparable<Book> {
     private int pages;
 
 
-    private Book(Builder builder){
+    private Book(Builder builder) {
 
         this.author = builder.author;
         this.title = builder.title;
@@ -14,19 +14,22 @@ public class Book implements Comparable<Book> {
 
 
     }
+
     public String getAuthor() {
         return author;
     }
+
     public String getTitle() {
         return title;
     }
+
     public int getPages() {
         return pages;
     }
 
 
     @Override
-    public String toString(){
+    public String toString() {
         return author + title + pages;
 
     }
@@ -34,8 +37,9 @@ public class Book implements Comparable<Book> {
     public int compareTo(Book o) {
         return this.getPages() - o.getPages();
     }
-    public static class Builder{
-        private static String author;
+
+    public static class Builder {
+        static String author;
         private static String title;
         private static int pages;
 
@@ -53,12 +57,16 @@ public class Book implements Comparable<Book> {
             this.pages = pages;
             return this;
         }
-        public Book build() {
-            return new Book(this);
 
+        public Book build() {
+            if (BookValidator.isValid(new Book(this))) {
+                return new Book(this);
+            } else {
+                throw new IllegalArgumentException("Некорректные данные");
+            }
         }
     }
-
-
 }
+
+
 
