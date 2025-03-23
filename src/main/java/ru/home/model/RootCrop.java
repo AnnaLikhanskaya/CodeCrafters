@@ -1,26 +1,46 @@
-package main.java.ru.home.model;
+package java.ru.home.model;
+
+import java.util.Objects;
 
 public class RootCrop implements Comparable<RootCrop> {
-    private final String type;
-    private final int weight;
-    private final String color;
+    private String type;
+    private double weight;
+    private String color;
 
-    private RootCrop(RootCropBuilder builder) {
+    private RootCrop(Builder builder) {
         this.type = builder.type;
         this.weight = builder.weight;
         this.color = builder.color;
     }
 
-    public String getType() {
-        return type;
+    public static class Builder {
+        private String type;
+        private double weight;
+        private String color;
+
+        public Builder type(String type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder weight(double weight) {
+            this.weight = weight;
+            return this;
+        }
+
+        public Builder color(String color) {
+            this.color = color;
+            return this;
+        }
+
+        public RootCrop build() {
+            return new RootCrop(this);
+        }
     }
 
-    public int getWeight() {
-        return weight;
-    }
-
-    public String getColor() {
-        return color;
+    @Override
+    public int compareTo(RootCrop other) {
+        return Double.compare(this.weight, other.weight);
     }
 
     @Override
@@ -33,32 +53,28 @@ public class RootCrop implements Comparable<RootCrop> {
     }
 
     @Override
-    public int compareTo(RootCrop other) {
-        return Integer.compare(this.weight, other.weight);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RootCrop rootCrop = (RootCrop) o;
+        return Double.compare(weight, rootCrop.weight) == 0 && Objects.equals(type, rootCrop.type) && Objects.equals(color, rootCrop.color);
     }
 
-    public static class RootCropBuilder {
-        private String type;
-        private int weight;
-        private String color;
-
-        public RootCropBuilder type(String type) {
-            this.type = type;
-            return this;
-        }
-
-        public RootCropBuilder weight(int weight) {
-            this.weight = weight;
-            return this;
-        }
-
-        public RootCropBuilder color(String color) {
-            this.color = color;
-            return this;
-        }
-
-        public RootCrop build() {
-            return new RootCrop(this);
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, weight, color);
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
 }
