@@ -1,6 +1,6 @@
-package java.ru.home.util;
+package ru.home.util;
 
-import java.ru.home.model.RootCrop;
+import ru.home.model.RootCrop;
 
 public class RootCropValidator {
     public static boolean validate(RootCrop rootCrop) {

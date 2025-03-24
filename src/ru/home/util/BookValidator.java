@@ -1,6 +1,6 @@
-package java.ru.home.util;
+package ru.home.util;
 
-import java.ru.home.model.Book;
+import ru.home.model.Book;
 
 public class BookValidator {
     public static boolean validate(Book book) {

@@ -1,4 +1,4 @@
-package java.ru.home.model;
+package ru.home.model;
 
 import java.util.Objects;
 

@@ -1,6 +1,6 @@
-package java.ru.home.util;
+package ru.home.util;
 
-import java.ru.home.model.Car;
+import ru.home.model.Car;
 import java.util.Comparator;
 
 public class CarComparator implements Comparator<Car> {

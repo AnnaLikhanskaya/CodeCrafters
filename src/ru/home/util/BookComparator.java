@@ -1,7 +1,6 @@
-package java.ru.home.util;
+package ru.home.util;
 
-
-import java.ru.home.model.Book;
+import ru.home.model.Book;
 import java.util.Comparator;
 
 public class BookComparator implements Comparator<Book> {
