@@ -1,8 +1,10 @@
 package ru.home.model;
 
-import java.util.Objects;
+import ru.home.strategy.interfaces.Searchable;
 
-public class Car implements Comparable<Car> {
+import java.util.Scanner;
+
+public class Car implements Comparable<Car>, Searchable<Car> {
     private int power;
     private String model;
     private int year;
@@ -11,6 +13,51 @@ public class Car implements Comparable<Car> {
         this.power = builder.power;
         this.model = builder.model;
         this.year = builder.year;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "power=" + power +
+                ", model='" + model + '\'' +
+                ", year=" + year +
+                '}';
+    }
+
+
+    @Override
+    public int compareTo(Car other) {
+        if (this.power != other.power) {
+            return Integer.compare(this.power, other.power);
+        } else if (!this.model.equals(other.model)) {
+            return this.model.compareTo(other.model);
+        } else {
+            return Integer.compare(this.year, other.year);
+        }
+    }
+
+    @Override
+    public Car createFromInput(Scanner scanner) {
+        System.out.println("Введите мощность:");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Некорректный ввод. Введите число:");
+            scanner.next();
+        }
+        int power = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Введите модель:");
+        String model = scanner.nextLine();
+
+        System.out.println("Введите год выпуска:");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Некорректный ввод. Введите число:");
+            scanner.next();
+        }
+        int year = scanner.nextInt();
+        scanner.nextLine();
+
+        return new Car.Builder().power(power).model(model).year(year).build();
     }
 
     public static class Builder {
@@ -38,33 +85,6 @@ public class Car implements Comparable<Car> {
         }
     }
 
-    @Override
-    public int compareTo(Car other) {
-        return Integer.compare(this.year, other.year);
-    }
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "power=" + power +
-                ", model='" + model + '\'' +
-                ", year=" + year +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Car car = (Car) o;
-        return power == car.power && year == car.year && Objects.equals(model, car.model);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(power, model, year);
-    }
-
     public int getPower() {
         return power;
     }
@@ -76,5 +96,4 @@ public class Car implements Comparable<Car> {
     public int getYear() {
         return year;
     }
-
 }

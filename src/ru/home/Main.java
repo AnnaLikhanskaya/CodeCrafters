@@ -1,18 +1,26 @@
 package ru.home;
 
-import ru.home.input.DataInputStrategy;
 import ru.home.model.Book;
 import ru.home.model.Car;
 import ru.home.model.RootCrop;
+import ru.home.strategy.interfaces.DataInputStrategy;
+import ru.home.util.BinarySearch;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        BinarySearch<Car> carBinarySearch = new BinarySearch<>();
+        BinarySearch<Book> bookBinarySearch = new BinarySearch<>();
+        BinarySearch<RootCrop> rootVegetableBinarySearch = new BinarySearch<>();
+        MergeSort<Car> mergeCar = new MergeSort<>();
+        MergeSort<Car> mergeBook = new MergeSort<>();
+        MergeSort<Car> mergeVegetable = new MergeSort<>();
         while (true) {
             System.out.println("Выберите тип данных (1 - Автомобиль, 2 - Книга, 3 - Корнеплод):");
             int type = scanner.nextInt();
+            scanner.nextLine();
             System.out.println("Выберите способ ввода данных (1 - Вручную, 2 - Из файла, 3 - Случайно):");
             int inputMethod = scanner.nextInt();
             DataInputStrategy<Car> car = null;
@@ -64,13 +72,22 @@ public class Main {
 
             //   Сортировка
             if (car != null) {
-                listCar = sorting(listCar, car, scanner);
+                listCar = mergeCar.sorting(listCar, car);
+                if (listCar == null) {
+                    continue;
+                }
             }
             if (book != null) {
-                listBook = sorting(listBook, book, scanner);
+                listBook = mergeBook.sorting(listBook, book);
+                if (listBook == null) {
+                    continue;
+                }
             }
             if (rootVegetable != null) {
-                listRoot = sorting(listRoot, rootVegetable, scanner);
+                listRoot = mergeVegetable.sorting(listRoot, rootVegetable);
+                if (listRoot == null) {
+                    continue;
+                }
             }
 
             // Бинарный поиск
@@ -78,66 +95,22 @@ public class Main {
             int searchChoice = scanner.nextInt();
             if (searchChoice == 1) {
                 if (listCar != null) {
-                    binarySearch(listCar, scanner);
+                    carBinarySearch.binSearch(listCar, scanner);
                 }
                 if (listBook != null) {
-                    binarySearch(listBook, scanner);
+                    bookBinarySearch.binSearch(listBook, scanner);
                 }
                 if (listRoot != null) {
-                    binarySearch(listRoot, scanner);
+                    rootVegetableBinarySearch.binSearch(listRoot, scanner);
                 }
             }
-
 
             System.out.println("Хотите выйти? (1 - Да, 2 - Нет):");
             int exitChoice = scanner.nextInt();
             if (exitChoice == 1) {
-                scanner.close();
                 System.out.println("The End.");
                 break;
             }
         }
     }
-
-    private static <T extends Comparable<T>> void check(int index, CustomArrayList<T> list) {
-        if (index != -1) {
-            System.out.println("Элемент найден на позиции: " + index + " - " + list.get(index).toString());
-        } else {
-            System.out.println("Элемент не найден");
-        }
-    }
-
-    public static <T extends Comparable<T>> CustomArrayList<T> sorting(CustomArrayList<T> list, DataInputStrategy<T> car, Scanner scanner) {
-        list = car.inputData();
-        System.out.println("Введенный список: " + list);
-        System.out.println("Хотите выполнить сортировку? (1 - Да, 2 - Нет):");
-        int sort = scanner.nextInt();
-        scanner.nextLine();
-        if (sort == 1) {
-            MergeSort<T> sorter = new MergeSort<>();
-            sorter.sort(list);
-            System.out.println("Отсортированный список: " + list);
-        } else if (sort != 2) {
-            System.out.println("Неверный ввод. Сортировка не выполнена.");
-        }
-        return list;
-    }
-
-    public static <T extends Comparable<T> & Searchable<T>> void binarySearch(CustomArrayList<T> list, Scanner scanner) {
-        if (list == null || list.size() == 0) {
-            System.out.println("Список пуст. Поиск невозможен.");
-            return;
-        }
-
-        T findObject = list.get(0).createFromInput(scanner);
-
-        if (findObject != null) {
-            BinarySearch<T> binarySearch = new BinarySearch<>();
-            int index = binarySearch.search(list, findObject);
-            check(index, list);
-        } else {
-            System.out.println("Неверный тип данных для поиска.");
-        }
-    }
-
 }

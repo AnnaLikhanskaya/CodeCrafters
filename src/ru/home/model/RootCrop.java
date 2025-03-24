@@ -1,8 +1,10 @@
 package ru.home.model;
 
-import java.util.Objects;
+import ru.home.strategy.interfaces.Searchable;
 
-public class RootCrop implements Comparable<RootCrop> {
+import java.util.Scanner;
+
+public class RootCrop implements Comparable<RootCrop>, Searchable<RootCrop> {
     private String type;
     private double weight;
     private String color;
@@ -11,6 +13,29 @@ public class RootCrop implements Comparable<RootCrop> {
         this.type = builder.type;
         this.weight = builder.weight;
         this.color = builder.color;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    @Override
+    public RootCrop createFromInput(Scanner scanner) {
+        System.out.println("Введите тип корнеплода:");
+        String type = scanner.next();
+        System.out.println("Введите вес корнеплода:");
+        int weight = scanner.nextInt();
+        System.out.println("Введите цвет корнеплода:");
+        String color = scanner.next();
+        return new RootCrop.Builder().type(type).weight(weight).color(color).build();
     }
 
     public static class Builder {
@@ -22,6 +47,7 @@ public class RootCrop implements Comparable<RootCrop> {
             this.type = type;
             return this;
         }
+
 
         public Builder weight(double weight) {
             this.weight = weight;
@@ -40,41 +66,13 @@ public class RootCrop implements Comparable<RootCrop> {
 
     @Override
     public int compareTo(RootCrop other) {
-        return Double.compare(this.weight, other.weight);
+        if (!this.type.equals(other.type)) return this.type.compareTo(other.type);
+        if (this.weight != other.weight) return Double.compare(this.weight, other.weight);
+        return this.color.compareTo(other.color);
     }
 
     @Override
     public String toString() {
-        return "RootCrop{" +
-                "type='" + type + '\'' +
-                ", weight=" + weight +
-                ", color='" + color + '\'' +
-                '}';
+        return "Vegetable{type='" + type + "', weight=" + weight + ", color='" + color + "'}";
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RootCrop rootCrop = (RootCrop) o;
-        return Double.compare(weight, rootCrop.weight) == 0 && Objects.equals(type, rootCrop.type) && Objects.equals(color, rootCrop.color);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, weight, color);
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
 }
