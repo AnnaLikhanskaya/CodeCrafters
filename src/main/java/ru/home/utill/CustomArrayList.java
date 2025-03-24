@@ -36,6 +36,15 @@ public class CustomArrayList<T> {
         return size;
     }
 
+    public T set(int index, T element) {
+        if (index >= size || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        T oldValue = (T) elements[index];
+        elements[index] = element;
+        return oldValue;
+    }
+
     public void remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
@@ -52,18 +61,6 @@ public class CustomArrayList<T> {
     private void ensureCapacity() {
         int newCapacity = elements.length * 2;
         elements = Arrays.copyOf(elements, newCapacity);
-    }
-
-    public void sort(Comparator<? super T> comparator) {
-        quickSort(0, size - 1, comparator);
-    }
-
-    private void quickSort(int low, int high, Comparator<? super T> comparator) {
-        if (low < high) {
-            int pi = partition(low, high, comparator);
-            quickSort(low, pi - 1, comparator);
-            quickSort(pi + 1, high, comparator);
-        }
     }
 
     private int partition(int low, int high, Comparator<? super T> comparator) {
@@ -90,4 +87,3 @@ public class CustomArrayList<T> {
         return Arrays.toString(Arrays.copyOf(elements, size));
     }
 }
-
