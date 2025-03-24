@@ -8,6 +8,7 @@ public class MergeSort<T extends Comparable<T>> {
 
     public  <T extends Comparable<T>> CustomArrayList<T> sorting(CustomArrayList<T> list, DataInputStrategy<T> obj) {
 
+
         list = obj.inputData();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введенный список: " + list);

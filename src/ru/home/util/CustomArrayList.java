@@ -8,6 +8,7 @@ public class CustomArrayList<T> {
     private Object[] elements;
     private int size;
 
+
     public CustomArrayList() {
         this.elements = new Object[DEFAULT_CAPACITY];
         this.size = 0;
