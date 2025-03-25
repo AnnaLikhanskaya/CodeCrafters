@@ -12,11 +12,11 @@ public class RandomInputCar implements DataInputStrategy<Car> {
     static Random random = new Random();
 
     @Override
-    public CustomArrayList inputData() {
+    public CustomArrayList<Car> inputData() {
         CustomArrayList<Car> carCustomArrayList = new CustomArrayList<>();
 
-        int lenListCars = random.nextInt(10, 15);
-        for (int i = 0; i <= lenListCars; i++) {
+        int lenListCars = random.nextInt(6) + 10;
+        for (int i = 0; i < lenListCars; i++) {
 
             int power = random.nextInt(1, 1001);
             int year = random.nextInt(1900, 2026);
