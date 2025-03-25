@@ -12,26 +12,35 @@ public class ManualInputCar implements DataInputStrategy<Car> {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Введите мощность (от 1 до 1000)");
-        if (!scanner.hasNextInt()) {
-            System.out.println("Введите число от 1 до 1000");
-        }
-        int power = scanner.nextInt();
-        scanner.nextLine();
+        boolean flag = false;
 
-        System.out.println("Введите марку авто");
-        String model = scanner.nextLine();
+        int power = 0;
+        String model = null;
+        int year = 0;
 
-        System.out.println("Введите год выпуска авто");
-        if (!scanner.hasNextInt()) {
-            System.out.println("Введите число от 1900 до 2025");
-        }
-        int year = scanner.nextInt();
+        while (!flag) {
+            System.out.println("Введите мощность (от 1 до 1000)");
+            if (!scanner.hasNextInt()) {
+                System.out.println("Введите число от 1 до 1000");
+            }
+            power = scanner.nextInt();
+            scanner.nextLine();
 
-        if (!(DataValidator.validateCarData(power, model, year))) {
-            System.out.println("Объект не создан - вы допустили ошибку в параметрах");
-            System.out.println("Проверьте параметры и введите их заново");
-            return  inputKeyboardCar();
+            System.out.println("Введите марку авто");
+            model = scanner.nextLine();
+
+            System.out.println("Введите год выпуска авто");
+            if (!scanner.hasNextInt()) {
+                System.out.println("Введите число от 1900 до 2025");
+            }
+            year = scanner.nextInt();
+
+            if (!(DataValidator.validateCarData(power, model, year))) {
+                System.out.println("Объект не создан - вы допустили ошибку в параметрах");
+                System.out.println("Проверьте параметры и введите их заново");
+            } else {
+                flag = true;
+            }
         }
         return new Car.Builder().power(power).model(model).year(year).build();
     }
