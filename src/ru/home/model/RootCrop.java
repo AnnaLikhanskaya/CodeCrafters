@@ -4,6 +4,8 @@ import ru.home.strategy.interfaces.Searchable;
 
 import java.util.Scanner;
 
+import static ru.home.model.validator.DataValidator.validateVegetableData;
+
 public class RootCrop implements Comparable<RootCrop>, Searchable<RootCrop> {
     private String type;
     private double weight;
@@ -35,6 +37,19 @@ public class RootCrop implements Comparable<RootCrop>, Searchable<RootCrop> {
         int weight = scanner.nextInt();
         System.out.println("Введите цвет корнеплода:");
         String color = scanner.next();
+
+        while(!validateVegetableData(type, weight, color)) {
+            System.out.println("Введите правильные данные!");
+            System.out.println("Вес должен бытьт больше нуля.");
+            System.out.println("А тип и цвет не может быть пустой строкой.");
+            System.out.println();
+            System.out.println("Введите тип корнеплода:");
+            type = scanner.next();
+            System.out.println("Введите вес корнеплода:");
+            weight = scanner.nextInt();
+            System.out.println("Введите цвет корнеплода:");
+            color = scanner.next();
+        }
         return new RootCrop.Builder().type(type).weight(weight).color(color).build();
     }
 
