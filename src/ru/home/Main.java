@@ -1,17 +1,26 @@
-package java.ru.home;
+package ru.home;
 
-import java.awt.print.Book;
-import java.ru.home.input.DataInputStrategy;
-import java.ru.home.model.Car;
-import java.ru.home.model.RootCrop;
+import ru.home.model.Book;
+import ru.home.model.Car;
+import ru.home.model.RootCrop;
+import ru.home.strategy.interfaces.DataInputStrategy;
+import ru.home.util.BinarySearch;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        BinarySearch<Car> carBinarySearch = new BinarySearch<>();
+        BinarySearch<Book> bookBinarySearch = new BinarySearch<>();
+        BinarySearch<RootCrop> rootVegetableBinarySearch = new BinarySearch<>();
+        MergeSort<Car> mergeCar = new MergeSort<>();
+        MergeSort<Car> mergeBook = new MergeSort<>();
+        MergeSort<Car> mergeVegetable = new MergeSort<>();
         while (true) {
             System.out.println("Выберите тип данных (1 - Автомобиль, 2 - Книга, 3 - Корнеплод):");
             int type = scanner.nextInt();
+            scanner.nextLine();
             System.out.println("Выберите способ ввода данных (1 - Вручную, 2 - Из файла, 3 - Случайно):");
             int inputMethod = scanner.nextInt();
             DataInputStrategy<Car> car = null;
@@ -60,63 +69,48 @@ public class Main {
                     continue;
             }
 
+
+            //   Сортировка
             if (car != null) {
-                listCar = car.inputData();
-                System.out.println("До сортировки: " + listCar);
-                MergeSort<Car> sorter = new MergeSort<>();
-                sorter.sort(listCar);
-                System.out.println("После сортировки: " + listCar);
-            } else if (book != null) {
-                listBook = book.inputData();
-                System.out.println("До сортировки: " + listBook);
-                MergeSort<Book> sorter = new MergeSort<>();
-                sorter.sort(listBook);
-                System.out.println("После сортировки: " + listBook);
-            } else if (rootVegetable != null) {
-                listRoot = rootVegetable.inputData();
-                System.out.println("До сортировки: " + listRoot);
-                MergeSort<RootVegetable> sorter = new MergeSort<>();
-                sorter.sort(listRoot);
-                System.out.println("После сортировки: " + listRoot);
+                listCar = mergeCar.sorting(listCar, car);
+                if (listCar == null) {
+                    continue;
+                }
+            }
+            if (book != null) {
+                listBook = mergeBook.sorting(listBook, book);
+                if (listBook == null) {
+                    continue;
+                }
+            }
+            if (rootVegetable != null) {
+                listRoot = mergeVegetable.sorting(listRoot, rootVegetable);
+                if (listRoot == null) {
+                    continue;
+                }
             }
 
+            // Бинарный поиск
             System.out.println("Хотите выполнить бинарный поиск? (1 - Да, 2 - Нет):");
             int searchChoice = scanner.nextInt();
             if (searchChoice == 1) {
-                System.out.println("Введите элемент для поиска:");
                 if (listCar != null) {
-                    BinarySearch<Car> binarySearch = new BinarySearch<>();
-                    Car carFind = new Car.Builder().power(200).model("Mazda").year(2019).build();
-                    int index = binarySearch.search(listCar, carFind);
-                    check(index);
+                    carBinarySearch.binSearch(listCar, scanner);
                 }
                 if (listBook != null) {
-                    BinarySearch<Book> binarySearch = new BinarySearch<>();
-                    Book bookFind = new Book.Builder().author("Lev").title("War and peace").pages(500).build();
-                    int index = binarySearch.search(listBook, bookFind);
-                    check(index);
+                    bookBinarySearch.binSearch(listBook, scanner);
                 }
                 if (listRoot != null) {
-                    BinarySearch<RootCrop> binarySearch = new BinarySearch<>();
-                    RootCrop rootFind = new RootCrop.Builder().type("Carrot").weight(2).color("orange").build();
-                    int index = binarySearch.search(listRoot, rootFind);
-                    check(index);
+                    rootVegetableBinarySearch.binSearch(listRoot, scanner);
                 }
             }
 
             System.out.println("Хотите выйти? (1 - Да, 2 - Нет):");
             int exitChoice = scanner.nextInt();
             if (exitChoice == 1) {
+                System.out.println("The End.");
                 break;
             }
-        }
-    }
-
-    private static void check(int index) {
-        if (index != -1) {
-            System.out.println("Элемент найден на позиции: " + index);
-        } else {
-            System.out.println("Элемент не найден");
         }
     }
 }
