@@ -1,4 +1,4 @@
-package ru.home.strategy.interfaces.inputbook;
+package ru.home.strategy.inputbook;
 
 package main.java.ru.home.utill.strategy.inputbook;
 
