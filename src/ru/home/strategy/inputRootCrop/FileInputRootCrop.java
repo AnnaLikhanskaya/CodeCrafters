@@ -2,11 +2,10 @@ package ru.home.strategy.inputRootCrop;
 
 import ru.home.model.RootCrop;
 import ru.home.strategy.interfaces.DataInputStrategy;
+import ru.home.strategy.interfaces.Searchable;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 import static ru.home.model.validator.DataValidator.validateVegetableData;
 
@@ -26,7 +25,7 @@ public class FileInputRootCrop implements DataInputStrategy<RootCrop> {
             while ((line = reader.readLine()) != null) {
                 RootCrop rootCrop = parseRootCropFromLine(line);
                 if (rootCrop != null) {
-                    rootCrops.Add(rootCrop);
+                    rootCrops.add(rootCrop);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -67,5 +66,4 @@ public class FileInputRootCrop implements DataInputStrategy<RootCrop> {
             return null;
         }
     }
-
 }
