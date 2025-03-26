@@ -44,4 +44,4 @@ public class FileInputBook implements DataInputStrategy<Book> {
 
         return list;
     }
-}}
+}
