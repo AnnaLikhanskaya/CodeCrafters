@@ -1,37 +1,44 @@
 package ru.home.strategy.inputRootCrop;
 
+
 import ru.home.model.RootCrop;
 import ru.home.strategy.interfaces.DataInputStrategy;
+import ru.home.util.CustomArrayList;
 
 import java.util.Random;
 
-import static ru.home.model.validator.DataValidator.validateVegetableData;
-
 public class RandomInputRootCrop implements DataInputStrategy<RootCrop> {
 
-    private static final Random random = new Random();
-    CustomArrayList<RootCrop> rootCrops = new CustomArrayList<>();
+    private final Random random;
+
+    public RandomInputRootCrop() {
+        this.random = new Random();
+    }
 
     @Override
     public CustomArrayList<RootCrop> inputData() {
-        String[] types = {"Carrot", "Potato", "Beet", "Radish", "Turnip"};
-        String[] colors = {"Orange", "Brown", "Red", "Purple", "White"};
+        CustomArrayList<RootCrop> list = new CustomArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
+        int count = random.nextInt(10) + 1;
+
+        for (int i = 0; i < count; i++) {
+            String[] types = {"Carrot", "Potato", "Beet", "Radish", "Turnip"};
             String type = types[random.nextInt(types.length)];
-            int weight = random.nextInt(500) + 100; // Weight between 100 and 599
+
+            int weight = random.nextInt(451) + 50;
+
+            String[] colors = {"Orange", "Brown", "Purple", "Red", "White"};
             String color = colors[random.nextInt(colors.length)];
 
-            if (validateVegetableData(type, weight, color)){
-                rootCrops.add(new RootCrop.Builder()
-                        .type(type)
-                        .weight(weight)
-                        .color(color)
-                        .build());
-            }else{
-                rootCrops.add(null);
-            }
+            RootCrop rootVegetable = new RootCrop.Builder()
+                    .type(type)
+                    .weight(weight)
+                    .color(color)
+                    .build();
+
+            list.add(rootVegetable);
         }
-        return rootCrops;
+
+        return list;
     }
 }

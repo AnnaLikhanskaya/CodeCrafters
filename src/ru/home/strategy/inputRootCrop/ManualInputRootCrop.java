@@ -1,31 +1,39 @@
 package ru.home.strategy.inputRootCrop;
 
-import java.util.Scanner;
 import ru.home.model.RootCrop;
+import ru.home.model.validator.DataValidator;
 import ru.home.strategy.interfaces.DataInputStrategy;
-import ru.home.strategy.interfaces.Searchable;
+import ru.home.util.CustomArrayList;
 
-import java.util.Random;
-
-import static ru.home.model.validator.DataValidator.validateVegetableData;
+import java.util.Scanner;
 
 public class ManualInputRootCrop implements DataInputStrategy<RootCrop> {
+    private Scanner scanner;
 
-    Scanner scanner = new Scanner(System.in);
-    CustomArrayList<RootCrop> rootCrops = new CustomArrayList<>();
+    public ManualInputRootCrop(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
-    @Override
     public CustomArrayList<RootCrop> inputData() {
-        System.out.println("Сколько собираетесь внести корнеплодов? Ведите число:");
-        while(!scanner.hasNextInt()){
-            System.out.println("Введите числовое значение!");
-        }
-        int  count = scanner.nextInt();
+        CustomArrayList<RootCrop> list = new CustomArrayList<>();
+        System.out.println("Введите количество корнеплодов:");
+        int count = scanner.nextInt();
+        scanner.nextLine();
 
         for (int i = 0; i < count; i++) {
-            rootCrops.add(new RootCrop.Builder().build().createFromInput(scanner));
+
+            RootCrop rootVegetable = new RootCrop.Builder().build().createFromInput(scanner);
+            String type = rootVegetable.getType();
+            double weight = rootVegetable.getWeight();
+            String color = rootVegetable.getColor();
+
+            if (DataValidator.validateVegetableData(type, weight, color)) {
+            } else {
+                System.out.println("Некорректные данные. Повторите ввод.");
+                i--;
+            }
         }
-        return rootCrops;
+        return list;
     }
 
 }

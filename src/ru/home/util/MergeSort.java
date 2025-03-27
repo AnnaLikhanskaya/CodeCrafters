@@ -1,12 +1,13 @@
 package ru.home.util;
 
-import main.java.ru.home.utill.strategy.interfaces.DataInputStrategy;
+
+import ru.home.strategy.interfaces.DataInputStrategy;
 
 import java.util.Scanner;
 
 public class MergeSort<T extends Comparable<T>> {
 
-    public  <T extends Comparable<T>> CustomArrayList<T> sorting(CustomArrayList<T> list, DataInputStrategy<T> obj) {
+    public <T extends Comparable<T>> CustomArrayList<T> sorting(CustomArrayList<T> list, DataInputStrategy<T> obj) {
 
 
         list = obj.inputData();
@@ -19,12 +20,11 @@ public class MergeSort<T extends Comparable<T>> {
             MergeSort<T> sorter = new MergeSort<>();
             sorter.sort(list);
             System.out.println("Отсортированный список: " + list);
-        } else  {
+        } else {
             return null;
         }
         return list;
     }
-
 
     public void sort(CustomArrayList<T> list) {
         if (list.size() > 1) {

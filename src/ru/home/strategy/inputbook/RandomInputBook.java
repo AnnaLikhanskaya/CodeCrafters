@@ -1,10 +1,8 @@
 package ru.home.strategy.inputbook;
 
-package main.java.ru.home.utill.strategy.inputbook;
-
-import main.java.ru.home.utill.CustomArrayList;
-import main.java.ru.home.utill.strategy.interfaces.DataInputStrategy;
-import main.java.ru.home.utill.model.Book;
+import ru.home.model.Book;
+import ru.home.strategy.interfaces.DataInputStrategy;
+import ru.home.util.CustomArrayList;
 
 import java.util.Random;
 

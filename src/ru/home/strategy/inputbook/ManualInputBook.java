@@ -1,11 +1,9 @@
 package ru.home.strategy.inputbook;
-package main.java.ru.home.utill.strategy.inputbook;
 
-import main.java.ru.home.utill.CustomArrayList;
-import main.java.ru.home.utill.model.Book;
-import main.java.ru.home.utill.model.Car;
-import main.java.ru.home.utill.strategy.DataValidator;
-import main.java.ru.home.utill.strategy.interfaces.DataInputStrategy;
+import ru.home.model.Book;
+import ru.home.model.validator.DataValidator;
+import ru.home.strategy.interfaces.DataInputStrategy;
+import ru.home.util.CustomArrayList;
 
 import java.util.Scanner;
 
@@ -23,7 +21,7 @@ public class ManualInputBook implements DataInputStrategy<Book> {
         CustomArrayList<Book> list = new CustomArrayList<>();
         System.out.println("Введите количество книг:");
         int count = scanner.nextInt();
-//        scanner.nextLine();
+        scanner.nextLine();
 
         for (int i = 0; i < count; i++) {
             Book book = new Book.Builder().build().createFromInput(scanner);
@@ -38,7 +36,6 @@ public class ManualInputBook implements DataInputStrategy<Book> {
                 i--;
             }
         }
-//        scanner.close();
         return list;
     }
 }

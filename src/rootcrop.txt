@@ -1,0 +1,9 @@
+Carrot
+0.5
+Orange
+Potato
+1.2
+Brown
+Beet
+0.7
+Red

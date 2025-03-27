@@ -1,10 +1,8 @@
 package ru.home.strategy.inputbook;
 
-package main.java.ru.home.utill.strategy.inputbook;
-
-import main.java.ru.home.utill.CustomArrayList;
-import main.java.ru.home.utill.model.Book;
-import main.java.ru.home.utill.strategy.interfaces.DataInputStrategy;
+import ru.home.model.Book;
+import ru.home.strategy.interfaces.DataInputStrategy;
+import ru.home.util.CustomArrayList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,8 +12,8 @@ import java.util.Scanner;
 public class FileInputBook implements DataInputStrategy<Book> {
     private String filePath;
 
-    public FileInputBook(){
-        this.filePath = "C:\\CodeCrafters\\book.txt";
+    public FileInputBook() {
+        this.filePath = "C:\\Users\\andre\\IdeaProjects\\CodeCrafters\\src\\book.txt";
     }
 
     @Override

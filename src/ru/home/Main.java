@@ -3,8 +3,19 @@ package ru.home;
 import ru.home.model.Book;
 import ru.home.model.Car;
 import ru.home.model.RootCrop;
+import ru.home.strategy.inputRootCrop.FileInputRootCrop;
+import ru.home.strategy.inputRootCrop.ManualInputRootCrop;
+import ru.home.strategy.inputRootCrop.RandomInputRootCrop;
+import ru.home.strategy.inputbook.FileInputBook;
+import ru.home.strategy.inputbook.ManualInputBook;
+import ru.home.strategy.inputbook.RandomInputBook;
+import ru.home.strategy.inputcar.FileInputCar;
+import ru.home.strategy.inputcar.ManualInputCar;
+import ru.home.strategy.inputcar.RandomInputCar;
 import ru.home.strategy.interfaces.DataInputStrategy;
 import ru.home.util.BinarySearch;
+import ru.home.util.CustomArrayList;
+import ru.home.util.MergeSort;
 
 import java.util.Scanner;
 
@@ -25,7 +36,7 @@ public class Main {
             int inputMethod = scanner.nextInt();
             DataInputStrategy<Car> car = null;
             DataInputStrategy<Book> book = null;
-            DataInputStrategy<RootCrop> rootVegetable = null;
+            DataInputStrategy<RootCrop> rootCrop = null;
             CustomArrayList<Car> listCar = null;
             CustomArrayList<RootCrop> listRoot = null;
             CustomArrayList<Book> listBook = null;
@@ -38,7 +49,7 @@ public class Main {
                         book = new ManualInputBook(scanner);
                     }
                     if (type == 3) {
-                        rootVegetable = new ManualInputRootVegetable(scanner);
+                        rootCrop = new ManualInputRootCrop(scanner);
                     }
                     break;
                 case 2:
@@ -49,7 +60,7 @@ public class Main {
                         book = new FileInputBook();
                     }
                     if (type == 3) {
-                        rootVegetable = new FileInputRootVegetable();
+                        rootCrop = new FileInputRootCrop();
                     }
                     break;
                 case 3:
@@ -60,7 +71,7 @@ public class Main {
                         book = new RandomInputBook();
                     }
                     if (type == 3) {
-                        rootVegetable = new RandomInputRootVegetable();
+                        rootCrop = new RandomInputRootCrop();
                     }
                     break;
 
@@ -83,8 +94,8 @@ public class Main {
                     continue;
                 }
             }
-            if (rootVegetable != null) {
-                listRoot = mergeVegetable.sorting(listRoot, rootVegetable);
+            if (rootCrop != null) {
+                listRoot = mergeVegetable.sorting(listRoot, rootCrop);
                 if (listRoot == null) {
                     continue;
                 }
