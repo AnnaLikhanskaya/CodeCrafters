@@ -33,6 +33,7 @@ public class Book implements Comparable<Book>, Searchable<Book> {
         while (true) {
             System.out.println("Введите автора:");
             author = scanner.nextLine().trim();
+
             if (!author.isEmpty() && author.matches("[a-zA-Z\\s]+")) {
                 break;
             } else {
@@ -56,10 +57,10 @@ public class Book implements Comparable<Book>, Searchable<Book> {
             System.out.println("Введите количество страниц:");
             while (!scanner.hasNextInt()) {
                 System.out.println("Некорректный ввод. Введите число:");
-                scanner.nextLine(); // Очистка буфера
+                scanner.nextLine(); // Очистка некорректного ввода
             }
             pages = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера
+            scanner.nextLine(); // Очистка буфера после ввода числа
             if (pages > 0) {
                 break;
             } else {

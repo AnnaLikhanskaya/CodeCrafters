@@ -6,7 +6,8 @@ import java.util.Scanner;
 
 public class BinarySearch<T extends Comparable<T> & Searchable<T>> {
 
-    public void binSearch(CustomArrayList<T> list, Scanner scanner) {
+    public void binSearch(CustomArrayList<T> list) {
+        Scanner scanner = new Scanner(System.in);
         if (list == null || list.size() == 0) {
             System.out.println("Список пуст. Поиск невозможен.");
             return;
@@ -19,7 +20,6 @@ public class BinarySearch<T extends Comparable<T> & Searchable<T>> {
         }
 
         T findObject = firstElement.createFromInput(scanner);
-
         if (findObject != null) {
             int index = search(list, findObject);
             check(index, list);

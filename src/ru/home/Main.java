@@ -26,79 +26,58 @@ public class Main {
         BinarySearch<Book> bookBinarySearch = new BinarySearch<>();
         BinarySearch<RootCrop> rootVegetableBinarySearch = new BinarySearch<>();
         MergeSort<Car> mergeCar = new MergeSort<>();
-        MergeSort<Car> mergeBook = new MergeSort<>();
-        MergeSort<Car> mergeVegetable = new MergeSort<>();
+        MergeSort<Book> mergeBook = new MergeSort<>();
+        MergeSort<RootCrop> mergeVegetable = new MergeSort<>();
+
         while (true) {
             System.out.println("Выберите тип данных (1 - Автомобиль, 2 - Книга, 3 - Корнеплод):");
             int type = scanner.nextInt();
             scanner.nextLine();
+
             System.out.println("Выберите способ ввода данных (1 - Вручную, 2 - Из файла, 3 - Случайно):");
             int inputMethod = scanner.nextInt();
-            DataInputStrategy<Car> car = null;
-            DataInputStrategy<Book> book = null;
-            DataInputStrategy<RootCrop> rootCrop = null;
+            scanner.nextLine();
+
+            DataInputStrategy<Car> carStrategy = null;
+            DataInputStrategy<Book> bookStrategy = null;
+            DataInputStrategy<RootCrop> rootCropStrategy = null;
             CustomArrayList<Car> listCar = null;
             CustomArrayList<RootCrop> listRoot = null;
             CustomArrayList<Book> listBook = null;
+
             switch (inputMethod) {
                 case 1:
-                    if (type == 1) {
-                        car = new ManualInputCar(scanner);
-                    }
-                    if (type == 2) {
-                        book = new ManualInputBook(scanner);
-                    }
-                    if (type == 3) {
-                        rootCrop = new ManualInputRootCrop(scanner);
-                    }
+                    if (type == 1) carStrategy = new ManualInputCar(scanner);
+                    if (type == 2) bookStrategy = new ManualInputBook(scanner);
+                    if (type == 3) rootCropStrategy = new ManualInputRootCrop(scanner);
                     break;
                 case 2:
-                    if (type == 1) {
-                        car = new FileInputCar();
-                    }
-                    if (type == 2) {
-                        book = new FileInputBook();
-                    }
-                    if (type == 3) {
-                        rootCrop = new FileInputRootCrop();
-                    }
+                    if (type == 1) carStrategy = new FileInputCar();
+                    if (type == 2) bookStrategy = new FileInputBook();
+                    if (type == 3) rootCropStrategy = new FileInputRootCrop();
                     break;
                 case 3:
-                    if (type == 1) {
-                        car = new RandomInputCar();
-                    }
-                    if (type == 2) {
-                        book = new RandomInputBook();
-                    }
-                    if (type == 3) {
-                        rootCrop = new RandomInputRootCrop();
-                    }
+                    if (type == 1) carStrategy = new RandomInputCar();
+                    if (type == 2) bookStrategy = new RandomInputBook();
+                    if (type == 3) rootCropStrategy = new RandomInputRootCrop();
                     break;
-
                 default:
                     System.out.println("Неверный выбор");
                     continue;
             }
 
-
-            //   Сортировка
-            if (car != null) {
-                listCar = mergeCar.sorting(listCar, car);
-                if (listCar == null) {
-                    continue;
-                }
+            // Сортировка
+            if (carStrategy != null) {
+                listCar = mergeCar.sorting(listCar, carStrategy);
+                if (listCar == null) continue;
             }
-            if (book != null) {
-                listBook = mergeBook.sorting(listBook, book);
-                if (listBook == null) {
-                    continue;
-                }
+            if (bookStrategy != null) {
+                listBook = mergeBook.sorting(listBook, bookStrategy);
+                if (listBook == null) continue;
             }
-            if (rootCrop != null) {
-                listRoot = mergeVegetable.sorting(listRoot, rootCrop);
-                if (listRoot == null) {
-                    continue;
-                }
+            if (rootCropStrategy != null) {
+                listRoot = mergeVegetable.sorting(listRoot, rootCropStrategy);
+                if (listRoot == null) continue;
             }
 
             // Бинарный поиск
@@ -106,13 +85,13 @@ public class Main {
             int searchChoice = scanner.nextInt();
             if (searchChoice == 1) {
                 if (listCar != null) {
-                    carBinarySearch.binSearch(listCar, scanner);
+                    carBinarySearch.binSearch(listCar);
                 }
                 if (listBook != null) {
-                    bookBinarySearch.binSearch(listBook, scanner);
+                    bookBinarySearch.binSearch(listBook);
                 }
                 if (listRoot != null) {
-                    rootVegetableBinarySearch.binSearch(listRoot, scanner);
+                    rootVegetableBinarySearch.binSearch(listRoot);
                 }
             }
 
