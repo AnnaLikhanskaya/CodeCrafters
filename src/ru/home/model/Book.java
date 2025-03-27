@@ -5,9 +5,9 @@ import ru.home.strategy.interfaces.Searchable;
 import java.util.Scanner;
 
 public class Book implements Comparable<Book>, Searchable<Book> {
-    private String author;
-    private String title;
-    private int pages;
+    private String author; // Автор
+    private String title; // Название
+    private int pages; // Количество страниц
 
     private Book(Builder builder) {
         this.author = builder.author;
@@ -25,6 +25,49 @@ public class Book implements Comparable<Book>, Searchable<Book> {
 
     public int getPages() {
         return pages;
+    }
+
+    @Override
+    public Book createFromInput(Scanner scanner) {
+        String author;
+        while (true) {
+            System.out.println("Введите автора:");
+            author = scanner.nextLine().trim();
+            if (!author.isEmpty() && author.matches("[a-zA-Z\\s]+")) {
+                break;
+            } else {
+                System.out.println("Автор должен содержать только буквы. Пожалуйста, введите автора.");
+            }
+        }
+
+        String title;
+        while (true) {
+            System.out.println("Введите название:");
+            title = scanner.nextLine().trim();
+            if (!title.isEmpty() && title.matches("[a-zA-Z\\s]+")) {
+                break;
+            } else {
+                System.out.println("Название должно содержать только буквы. Пожалуйста, введите название.");
+            }
+        }
+
+        int pages;
+        while (true) {
+            System.out.println("Введите количество страниц:");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Некорректный ввод. Введите число:");
+                scanner.nextLine();
+            }
+            pages = scanner.nextInt();
+            scanner.nextLine();
+            if (pages > 0) {
+                break;
+            } else {
+                System.out.println("Количество страниц должно быть положительным числом.");
+            }
+        }
+
+        return new Book.Builder().author(author).title(title).pages(pages).build();
     }
 
     public static class Builder {
@@ -62,45 +105,5 @@ public class Book implements Comparable<Book>, Searchable<Book> {
     @Override
     public String toString() {
         return "Book{author='" + author + "', title='" + title + "', pages=" + pages + "}";
-    }
-
-
-    @Override
-    public Book createFromInput(Scanner scanner) {
-        String author;
-        do {
-            System.out.println("Введите автора:");
-            author = scanner.nextLine().trim();
-            if (author.isEmpty()) {
-                System.out.println("Автор не может быть пустым. Пожалуйста, введите автора.");
-            }
-        } while (author.isEmpty());
-
-        String title;
-        do {
-            System.out.println("Введите название:");
-            title = scanner.nextLine().trim();
-            if (title.isEmpty()) {
-                System.out.println("Название не может быть пустым. Пожалуйста, введите название.");
-            }
-        } while (title.isEmpty());
-
-        int pages;
-        while (true) {
-            System.out.println("Введите количество страниц:");
-            while (!scanner.hasNextInt()) {
-                System.out.println("Некорректный ввод. Введите число:");
-                scanner.next();
-            }
-            pages = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера
-            if (pages > 0) {
-                break;
-            } else {
-                System.out.println("Количество страниц должно быть положительным числом.");
-            }
-        }
-
-        return new Book.Builder().author(author).title(title).pages(pages).build();
     }
 }

@@ -27,6 +27,49 @@ public class RootCrop implements Comparable<RootCrop>, Searchable<RootCrop> {
         return color;
     }
 
+    @Override
+    public RootCrop createFromInput(Scanner scanner) {
+        String type;
+        while (true) {
+            System.out.println("Введите тип корнеплода:");
+            type = scanner.next().trim();
+            if (!type.isEmpty() && type.matches("[a-zA-Z\\s]+")) {
+                break;
+            } else {
+                System.out.println("Тип корнеплода не может быть пустым и должен содержать только буквы. Пожалуйста, повторите ввод.");
+            }
+        }
+
+        double weight;
+        while (true) {
+            System.out.println("Введите вес корнеплода:");
+            String weightInput = scanner.next().trim();
+            try {
+                weight = Double.parseDouble(weightInput);
+                if (weight > 0) {
+                    break;
+                } else {
+                    System.out.println("Вес должен быть больше нуля.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Некорректный ввод. Введите числовое значение:");
+            }
+        }
+
+        String color;
+        while (true) {
+            System.out.println("Введите цвет корнеплода:");
+            color = scanner.next().trim();
+            if (!color.isEmpty() && color.matches("[a-zA-Z\\s]+")) {
+                break;
+            } else {
+                System.out.println("Цвет корнеплода не может быть пустым и должен содержать только буквы. Пожалуйста, повторите ввод.");
+            }
+        }
+
+        return new RootCrop.Builder().type(type).weight(weight).color(color).build();
+    }
+
 
     public static class Builder {
         private String type;
@@ -64,41 +107,5 @@ public class RootCrop implements Comparable<RootCrop>, Searchable<RootCrop> {
     @Override
     public String toString() {
         return "Vegetable{type='" + type + "', weight=" + weight + ", color='" + color + "'}";
-    }
-
-    @Override
-    public RootCrop createFromInput(Scanner scanner) {
-        System.out.println("Введите тип корнеплода:");
-        String type = "";
-        while (type.isEmpty()) {
-            type = scanner.nextLine().trim();
-            if (type.isEmpty()) {
-                System.out.println("Тип не может быть пустым. Пожалуйста, введите тип.");
-            }
-        }
-
-        System.out.println("Введите вес корнеплода:");
-        double weight = 0;
-        while (weight <= 0) {
-            try {
-                weight = Double.parseDouble(scanner.nextLine().trim());
-                if (weight <= 0) {
-                    System.out.println("Вес должен быть положительным числом. Пожалуйста, введите вес.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Некорректный ввод. Введите число:");
-            }
-        }
-
-        System.out.println("Введите цвет корнеплода:");
-        String color = "";
-        while (color.isEmpty()) {
-            color = scanner.nextLine().trim();
-            if (color.isEmpty()) {
-                System.out.println("Цвет не может быть пустым. Пожалуйста, введите цвет.");
-            }
-        }
-
-        return new RootCrop.Builder().type(type).weight(weight).color(color).build();
     }
 }

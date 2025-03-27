@@ -5,10 +5,13 @@ import ru.home.model.validator.DataValidator;
 import ru.home.strategy.interfaces.DataInputStrategy;
 import ru.home.util.CustomArrayList;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class FileInputCar implements DataInputStrategy<Car> {
@@ -20,39 +23,27 @@ public class FileInputCar implements DataInputStrategy<Car> {
 
     @Override
     public CustomArrayList<Car> inputData() {
-        CustomArrayList<Car> carCustomArrayList = new CustomArrayList<>();
+        CustomArrayList<Car> list = new CustomArrayList<>();
+        File file = new File(filePath);
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                int power = Integer.parseInt(scanner.nextLine().trim());
+                String model = scanner.nextLine().trim();
+                int year = Integer.parseInt(scanner.nextLine().trim());
 
-        try {
-            // Чтение всех строк из файла
-            List<String> lines = Files.readAllLines(Path.of(this.filePath));
+                Car car = new Car.Builder()
+                        .power(power)
+                        .model(model)
+                        .year(year)
+                        .build();
 
-            // Проверка, что количество строк кратно 3
-            if (lines.size() % 3 != 0) {
-                throw new IllegalArgumentException("Некорректный формат файла. Количество строк должно быть кратно 3.");
+                list.add(car);
             }
-
-            for (int i = 0; i < lines.size(); i += 3) {
-                int power = Integer.parseInt(lines.get(i).trim());
-                String model = lines.get(i + 1).trim();
-                int year = Integer.parseInt(lines.get(i + 2).trim());
-
-                // Валидация данных
-                if (DataValidator.validateCarData(power, model, year)) {
-
-                    carCustomArrayList.add(new Car.Builder().power(power).model(model).year(year).build());
-                } else {
-                    System.out.println("Некорректные данные в строках: " + lines.get(i) + ", " + lines.get(i + 1) + ", " + lines.get(i + 2));
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Файл не найден: " + this.filePath);
+        } catch (FileNotFoundException e) {
+            System.err.println("Файл не найден: " + filePath);
             e.printStackTrace();
-        } catch (NumberFormatException e) {
-            System.err.println("Ошибка в преобразовании числа: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
         }
 
-        return carCustomArrayList;
+        return list;
     }
 }

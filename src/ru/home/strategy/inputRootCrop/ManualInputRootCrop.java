@@ -28,6 +28,7 @@ public class ManualInputRootCrop implements DataInputStrategy<RootCrop> {
             String color = rootVegetable.getColor();
 
             if (DataValidator.validateVegetableData(type, weight, color)) {
+                list.add(rootVegetable);
             } else {
                 System.out.println("Некорректные данные. Повторите ввод.");
                 i--;

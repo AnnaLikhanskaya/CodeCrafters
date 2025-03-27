@@ -7,8 +7,7 @@ import java.util.Scanner;
 
 public class MergeSort<T extends Comparable<T>> {
 
-    public <T extends Comparable<T>> CustomArrayList<T> sorting(CustomArrayList<T> list, DataInputStrategy<T> obj) {
-
+    public  <T extends Comparable<T>> CustomArrayList<T> sorting(CustomArrayList<T> list, DataInputStrategy<T> obj) {
 
         list = obj.inputData();
         Scanner scanner = new Scanner(System.in);
@@ -20,11 +19,12 @@ public class MergeSort<T extends Comparable<T>> {
             MergeSort<T> sorter = new MergeSort<>();
             sorter.sort(list);
             System.out.println("Отсортированный список: " + list);
-        } else {
+        } else  {
             return null;
         }
         return list;
     }
+
 
     public void sort(CustomArrayList<T> list) {
         if (list.size() > 1) {

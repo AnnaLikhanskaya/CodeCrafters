@@ -16,19 +16,27 @@ public class RandomInputCar implements DataInputStrategy<Car> {
 
     @Override
     public CustomArrayList<Car> inputData() {
-        CustomArrayList<Car> carCustomArrayList = new CustomArrayList<>();
+        CustomArrayList<Car> list = new CustomArrayList<>();
 
-        int lenListCars = random.nextInt(6) + 10;
-        for (int i = 0; i < lenListCars; i++) {
+        int count = random.nextInt(10) + 1;
 
-            int power = random.nextInt(1, 1001);
-            int year = random.nextInt(1900, 2026);
+        for (int i = 0; i < count; i++) {
+            String[] models = {"Toyota", "Honda", "Ford", "Chevrolet", "BMW", "Audi", "Mercedes", "Tesla"};
+            String model = models[random.nextInt(models.length)];
 
-            String[] mylist = {"Ford", "Toyota", "Nissan", "BMW", "Lada", "Mazda", "Kia", "Land Rover"};
-            String model = mylist[random.nextInt(mylist.length)];
+            int power = random.nextInt(501) + 100;
 
-            carCustomArrayList.add(new Car.Builder().power(power).model(model).year(year).build());
+            int year = random.nextInt(24) + 2000;
+
+            Car car = new Car.Builder()
+                    .model(model)
+                    .power(power)
+                    .year(year)
+                    .build();
+
+            list.add(car);
         }
-        return carCustomArrayList;
+
+        return list;
     }
 }

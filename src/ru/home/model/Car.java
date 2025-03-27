@@ -3,6 +3,7 @@ package ru.home.model;
 import ru.home.strategy.interfaces.Searchable;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Car implements Comparable<Car>, Searchable<Car> {
     private int power;
@@ -34,6 +35,42 @@ public class Car implements Comparable<Car>, Searchable<Car> {
         } else {
             return Integer.compare(this.year, other.year);
         }
+    }
+
+    @Override
+    public Car createFromInput(Scanner scanner) {
+        System.out.println("Введите мощность:");
+        int power = getValidatedIntInput(scanner, "Некорректный ввод. Введите число:");
+
+        System.out.println("Введите модель:");
+        String model;
+        while (true) {
+            model = scanner.nextLine().trim();
+            if (!model.isEmpty() && isValidModel(model)) {
+                break;
+            } else {
+                System.out.println("Некорректный ввод. Модель не должна быть пустой и должна содержать только буквы. Повторите ввод.");
+            }
+        }
+
+        System.out.println("Введите год выпуска:");
+        int year = getValidatedIntInput(scanner, "Некорректный ввод. Введите число:");
+
+        return new Car.Builder().power(power).model(model).year(year).build();
+    }
+
+    private int getValidatedIntInput(Scanner scanner, String errorMessage) {
+        while (!scanner.hasNextInt()) {
+            System.out.println(errorMessage);
+            scanner.next();
+        }
+        int value = scanner.nextInt();
+        scanner.nextLine();
+        return value;
+    }
+
+    private boolean isValidModel(String model) {
+        return Pattern.matches("[a-zA-Z\\s]+", model);
     }
 
     public static class Builder {
@@ -71,33 +108,5 @@ public class Car implements Comparable<Car>, Searchable<Car> {
 
     public int getYear() {
         return year;
-    }
-
-    @Override
-    public Car createFromInput(Scanner scanner) {
-        System.out.println("Введите мощность:");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Некорректный ввод. Введите число:");
-            scanner.next();
-        }
-        int power = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.println("Введите модель:");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Некорректный ввод:");
-            scanner.next();
-        }
-        String model = scanner.nextLine();
-        scanner.nextLine();
-
-        System.out.println("Введите год выпуска:");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Некорректный ввод. Введите число:");
-            scanner.next();
-        }
-        int year = scanner.nextInt();
-        scanner.nextLine();
-        return new Car.Builder().power(power).model(model).year(year).build();
     }
 }

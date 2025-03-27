@@ -5,9 +5,8 @@ import ru.home.model.RootCrop;
 import ru.home.strategy.interfaces.DataInputStrategy;
 import ru.home.util.CustomArrayList;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 import static ru.home.model.validator.DataValidator.validateVegetableData;
 
@@ -20,46 +19,28 @@ public class FileInputRootCrop implements DataInputStrategy<RootCrop> {
 
     @Override
     public CustomArrayList<RootCrop> inputData() {
-        CustomArrayList<RootCrop> rootCrops = new CustomArrayList<>();
+        CustomArrayList<RootCrop> list = new CustomArrayList<>();
+        File file = new File(filePath);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                RootCrop rootCrop = parseRootCropFromLine(line);
-                if (rootCrop != null) {
-                    rootCrops.add(rootCrop);
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Ошибка чтения файла: " + e.getMessage());
-        }
-        return rootCrops;
-    }
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String type = scanner.nextLine().trim();
+                double weight = Double.parseDouble(scanner.nextLine().trim());
+                String color = scanner.nextLine().trim();
 
-    private static RootCrop parseRootCropFromLine(String line) {
-        String[] parts = line.split(",");
-        if (parts.length != 3) {
-            System.err.println("Неверный формат строки: " + line);
-            return null;
-        }
-
-        try {
-            String type = parts[0].trim();
-            double weight = Double.parseDouble(parts[1].trim());
-            String color = parts[2].trim();
-
-            if (validateVegetableData(type, weight, color)) {
-                return new RootCrop.Builder()
+                RootCrop rootVegetable = new RootCrop.Builder()
                         .type(type)
                         .weight(weight)
                         .color(color)
                         .build();
-            } else {
-                return null;
+
+                list.add(rootVegetable);
             }
-        } catch (NumberFormatException e) {
-            System.err.println("Неверный формат числа в строке: " + line);
-            return null;
+        } catch (FileNotFoundException e) {
+            System.err.println("Файл не найден: " + filePath);
+            e.printStackTrace();
         }
+
+        return list;
     }
 }
