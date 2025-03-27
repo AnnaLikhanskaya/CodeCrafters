@@ -4,7 +4,7 @@ import ru.home.strategy.interfaces.Searchable;
 
 import java.util.Scanner;
 
-public class Car implements Comparable<Car>, Searchable<Car> {
+public class Car implements Comparable<Car>, Searchable<Car>{
     private int power;
     private String model;
     private int year;
