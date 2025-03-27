@@ -21,7 +21,6 @@ public class ManualInputBook implements DataInputStrategy<Book> {
         CustomArrayList<Book> list = new CustomArrayList<>();
         System.out.println("Введите количество книг:");
         int count = scanner.nextInt();
-//        scanner.nextLine();
 
         for (int i = 0; i < count; i++) {
             Book book = new Book.Builder().build().createFromInput(scanner);
@@ -36,7 +35,6 @@ public class ManualInputBook implements DataInputStrategy<Book> {
                 i--;
             }
         }
-//        scanner.close();
         return list;
     }
 }

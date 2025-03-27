@@ -36,7 +36,7 @@ public class RootCrop implements Comparable<RootCrop>, Searchable<RootCrop> {
             if (!type.isEmpty() && type.matches("[a-zA-Z\\s]+")) {
                 break;
             } else {
-                System.out.println("Тип корнеплода не может быть пустым и должен содержать только буквы. Пожалуйста, повторите ввод.");
+                System.out.println("Тип корнеплода должен содержать только буквы. Пожалуйста, повторите ввод.");
             }
         }
 
@@ -63,7 +63,7 @@ public class RootCrop implements Comparable<RootCrop>, Searchable<RootCrop> {
             if (!color.isEmpty() && color.matches("[a-zA-Z\\s]+")) {
                 break;
             } else {
-                System.out.println("Цвет корнеплода не может быть пустым и должен содержать только буквы. Пожалуйста, повторите ввод.");
+                System.out.println("Цвет должен содержать только буквы. Пожалуйста, повторите ввод.");
             }
         }
 

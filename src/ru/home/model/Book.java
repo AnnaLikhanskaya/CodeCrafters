@@ -56,10 +56,10 @@ public class Book implements Comparable<Book>, Searchable<Book> {
             System.out.println("Введите количество страниц:");
             while (!scanner.hasNextInt()) {
                 System.out.println("Некорректный ввод. Введите число:");
-                scanner.nextLine();
+                scanner.nextLine(); // Очистка буфера
             }
             pages = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Очистка буфера
             if (pages > 0) {
                 break;
             } else {
@@ -69,6 +69,7 @@ public class Book implements Comparable<Book>, Searchable<Book> {
 
         return new Book.Builder().author(author).title(title).pages(pages).build();
     }
+
 
     public static class Builder {
         private String author;

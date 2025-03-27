@@ -24,7 +24,7 @@ public class RandomInputBook implements DataInputStrategy<Book> {
             String[] authors = {"J.K. Rowling", "George Orwell", "J.R.R. Tolkien", "Agatha Christie", "Stephen King"};
             String author = authors[random.nextInt(authors.length)];
 
-            String[] titles = {"The Great Gatsby", "1984", "The Hobbit", "Murder on the Orient Express", "The Shining"};
+            String[] titles = {"The Great Gatsby", "The Hobbit", "Murder on the Orient Express", "The Shining"};
             String title = titles[random.nextInt(titles.length)];
 
             int pages = random.nextInt(901) + 100;

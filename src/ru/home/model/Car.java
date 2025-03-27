@@ -49,7 +49,7 @@ public class Car implements Comparable<Car>, Searchable<Car> {
             if (!model.isEmpty() && isValidModel(model)) {
                 break;
             } else {
-                System.out.println("Некорректный ввод. Модель не должна быть пустой и должна содержать только буквы. Повторите ввод.");
+                System.out.println("Некорректный ввод. Модель должна содержать только буквы. Повторите ввод.");
             }
         }
 
