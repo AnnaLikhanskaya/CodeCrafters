@@ -24,7 +24,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         BinarySearch<Car> carBinarySearch = new BinarySearch<>();
         BinarySearch<Book> bookBinarySearch = new BinarySearch<>();
-        BinarySearch<RootCrop> rootVegetableBinarySearch = new BinarySearch<>();
+        BinarySearch<RootCrop> rootCropBinarySearchBinarySearch = new BinarySearch<>();
         MergeSort<Car> mergeCar = new MergeSort<>();
         MergeSort<Book> mergeBook = new MergeSort<>();
         MergeSort<RootCrop> mergeVegetable = new MergeSort<>();
@@ -91,7 +91,7 @@ public class Main {
                     bookBinarySearch.binSearch(listBook);
                 }
                 if (listRoot != null) {
-                    rootVegetableBinarySearch.binSearch(listRoot);
+                    rootCropBinarySearchBinarySearch.binSearch(listRoot);
                 }
             }
 

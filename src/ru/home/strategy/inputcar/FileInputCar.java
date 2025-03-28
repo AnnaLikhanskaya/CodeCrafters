@@ -1,16 +1,11 @@
 package ru.home.strategy.inputcar;
 
 import ru.home.model.Car;
-import ru.home.model.validator.DataValidator;
 import ru.home.strategy.interfaces.DataInputStrategy;
 import ru.home.util.CustomArrayList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
 import java.util.Scanner;
 
 

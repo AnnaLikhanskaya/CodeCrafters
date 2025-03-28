@@ -5,9 +5,9 @@ import ru.home.strategy.interfaces.Searchable;
 import java.util.Scanner;
 
 public class Book implements Comparable<Book>, Searchable<Book> {
-    private String author; // Автор
-    private String title; // Название
-    private int pages; // Количество страниц
+    private String author;
+    private String title;
+    private int pages;
 
     private Book(Builder builder) {
         this.author = builder.author;
@@ -57,10 +57,10 @@ public class Book implements Comparable<Book>, Searchable<Book> {
             System.out.println("Введите количество страниц:");
             while (!scanner.hasNextInt()) {
                 System.out.println("Некорректный ввод. Введите число:");
-                scanner.nextLine(); // Очистка некорректного ввода
+                scanner.nextLine();
             }
             pages = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера после ввода числа
+            scanner.nextLine();
             if (pages > 0) {
                 break;
             } else {

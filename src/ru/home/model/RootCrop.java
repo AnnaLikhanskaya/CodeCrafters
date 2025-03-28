@@ -27,6 +27,32 @@ public class RootCrop implements Comparable<RootCrop>, Searchable<RootCrop> {
         return color;
     }
 
+    public static class Builder {
+        private String type;
+        private double weight;
+        private String color;
+
+        public Builder type(String type) {
+            this.type = type;
+            return this;
+        }
+
+
+        public Builder weight(double weight) {
+            this.weight = weight;
+            return this;
+        }
+
+        public Builder color(String color) {
+            this.color = color;
+            return this;
+        }
+
+        public RootCrop build() {
+            return new RootCrop(this);
+        }
+    }
+
     @Override
     public RootCrop createFromInput(Scanner scanner) {
         String type;
@@ -70,32 +96,6 @@ public class RootCrop implements Comparable<RootCrop>, Searchable<RootCrop> {
         return new RootCrop.Builder().type(type).weight(weight).color(color).build();
     }
 
-
-    public static class Builder {
-        private String type;
-        private double weight;
-        private String color;
-
-        public Builder type(String type) {
-            this.type = type;
-            return this;
-        }
-
-
-        public Builder weight(double weight) {
-            this.weight = weight;
-            return this;
-        }
-
-        public Builder color(String color) {
-            this.color = color;
-            return this;
-        }
-
-        public RootCrop build() {
-            return new RootCrop(this);
-        }
-    }
 
     @Override
     public int compareTo(RootCrop other) {

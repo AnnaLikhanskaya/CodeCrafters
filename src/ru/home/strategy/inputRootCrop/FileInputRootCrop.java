@@ -5,10 +5,9 @@ import ru.home.model.RootCrop;
 import ru.home.strategy.interfaces.DataInputStrategy;
 import ru.home.util.CustomArrayList;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import static ru.home.model.validator.DataValidator.validateVegetableData;
 
 public class FileInputRootCrop implements DataInputStrategy<RootCrop> {
     private String filePath;
